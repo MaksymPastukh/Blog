@@ -2,14 +2,16 @@ import {ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular
 import {provideRouter} from '@angular/router'
 
 import {routes} from './app.routes'
-import {provideStore} from '@ngrx/store'
-import {provideStoreDevtools} from '@ngrx/store-devtools' // Ваши редьюсеры
+import {provideState, provideStore} from '@ngrx/store'
+import {provideStoreDevtools} from '@ngrx/store-devtools'
+import {authReducer} from './auth/store/reducers' // Ваши редьюсеры
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({eventCoalescing: true}),  // Оптимизация событий
     provideRouter(routes), // Маршруты
     provideStore({}), // Подключаем Store reducers
+    provideState({ name: 'auth', reducer: authReducer }),
     provideStoreDevtools({
       maxAge: 25, //Сохраняет последние 25 состояний
       logOnly: !isDevMode(), // Ограничение расширения до режима только для ведения журнала

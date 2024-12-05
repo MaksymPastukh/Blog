@@ -1,9 +1,17 @@
-import { ActionReducerMap } from '@ngrx/store';
+import {AuthStateInterface} from '../types/authState.interface'
+import {createReducer, on} from '@ngrx/store'
+import {registerAction} from './actions/register.action'
 
-// Определите интерфейс состояния
-export interface AppState {
-  // Добавьте свойства для ваших фичей
+
+const initialState: AuthStateInterface = {
+  isSubmitting: false
 }
 
-// Экспортируйте редьюсеры
-export const reducers: ActionReducerMap<AppState> = {};
+export const authReducer = createReducer(
+  initialState,
+  on(registerAction, (state): AuthStateInterface => ({
+    ...state,
+    isSubmitting: true
+  }))
+)
+

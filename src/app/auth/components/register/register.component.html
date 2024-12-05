@@ -25,7 +25,9 @@
                      class="form-control form-control-lg"
                      placeholder="Password">
             </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right" [disabled]="!formRegister.valid">Sing Up</button>
+            <button class="btn btn-lg btn-primary pull-xs-right"
+                    [disabled]="!formRegister.valid ||( isSubmitting$ | async)">Sing Up
+            </button>
           </fieldset>
         </form>
       </div>
