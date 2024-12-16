@@ -1,33 +1,36 @@
 <div class="auth-page">
-  <div class="container page">
-    <div class="row">
-      <div class="col-md-6 offset-md-3 col-xs-12">
-        <h1 class="text-xs-center">Sing Up</h1>
-        <p class="text-xs-center">
-          <a [routerLink]="['/login']">Have an account?</a>
+  <div class="container mx-auto">
+    <div class="h-screen flex items-center justify-center">
+      <div class="bg-white p-8 rounded-lg shadow-lg">
+        <h1 class="font-semibold font-montserrat text-blue-400 text-center text-5xl mb-16">Join Blog</h1>
+        <p class="text-1xl text-gray-500 text-center mb-6">
+          Already have an account? <a [routerLink]="['/login']" class="font-bold">Sign in</a>
         </p>
-        Backend errors are here
+        @if (isVisibleError) {
+          <div class="visible-error text-right text-gray-500 text-1xl">Backend errors are here</div>
+        }
         <form [formGroup]="formRegister" (ngSubmit)="onSubmit()">
-          <fieldset>
-            <fieldset class="form-group">
-              <input type="text" formControlName="username"
-                     [ngStyle]="{'border-color': name?.invalid && (name?.dirty || name?.touched) ? 'red' : '' }"
-                     class="form-control form-control-lg" placeholder="User name">
-            </fieldset>
-            <fieldset class="form-group">
-              <input type="text" formControlName="email"
-                     [ngStyle]="{'border-color': email?.invalid && (email?.dirty || email?.touched) ? 'red' : '' }"
-                     class="form-control form-control-lg" placeholder="Email">
-            </fieldset>
-            <fieldset class="form-group">
-              <input type="password" formControlName="password"
-                     [ngStyle]="{'border-color': password?.invalid && (password?.dirty || password?.touched) ? 'red' : '' }"
-                     class="form-control form-control-lg"
-                     placeholder="Password">
-            </fieldset>
-            <button class="btn btn-lg btn-primary pull-xs-right"
-                    [disabled]="!formRegister.valid ||( isSubmitting$ | async)">Sing Up
-            </button>
+          <fieldset class="mb-3">
+            <input id="username" type="text" pInputText formControlName="username" placeholder="Login"
+                   [ngClass]="name?.invalid && (name?.dirty || name?.touched) ? 'ng-invalid ng-dirty' : 'ring-secondary'"
+                   [ngStyle]="{'border-color': name?.invalid && (name?.dirty || name?.touched) ? 'red' : '' }"
+                   class="auth-input">
+          </fieldset>
+          <fieldset class="mb-3">
+            <input id="email" type="text" pInputText formControlName="email" placeholder="Email"
+                   [ngClass]="email?.invalid && (email?.dirty || email?.touched) ? 'ng-invalid ng-dirty' : 'ring-secondary'"
+                   [ngStyle]="{'border-color': email?.invalid && (email?.dirty || email?.touched) ? 'red' : '' }"
+                   class="auth-input">
+          </fieldset>
+          <fieldset class="mb-3">
+            <input id="password" type="password" pInputText formControlName="password" placeholder="Password"
+                   [ngClass]="password?.invalid && (password?.dirty || password?.touched) ? 'ng-invalid ng-dirty' : ''"
+                   [ngStyle]="{'border-color': password?.invalid && (password?.dirty || password?.touched) ? 'red' : '' }"
+                   class="auth-input">
+          </fieldset>
+          <fieldset class="flex justify-end">
+            <p-button type="submit" class="auth-btn" label="Sing Up"
+                      [disabled]="!formRegister.valid ||( isSubmitting$ | async)" />
           </fieldset>
         </form>
       </div>

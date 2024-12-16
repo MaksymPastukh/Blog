@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "MediumClone": {
+    "Blog": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/medium-clone",
+            "outputPath": "dist/blog",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -31,6 +31,9 @@
               }
             ],
             "styles": [
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
               "src/assets/styles/styles.scss"
             ],
             "scripts": []
@@ -63,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "MediumClone:build:production"
+              "buildTarget": "Blog:build:production"
             },
             "development": {
-              "buildTarget": "MediumClone:build:development"
+              "buildTarget": "Blog:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -96,5 +99,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "8a4c36b5-5fd4-4056-add1-ca5a67cf524a"
   }
 }

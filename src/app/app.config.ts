@@ -4,14 +4,20 @@ import {provideRouter} from '@angular/router'
 import {routes} from './app.routes'
 import {provideState, provideStore} from '@ngrx/store'
 import {provideStoreDevtools} from '@ngrx/store-devtools'
-import {authReducer} from './auth/store/reducers' // Ваши редьюсеры
+import {authReducer} from './auth/store/reducers'
+import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
+import {provideEffects} from '@ngrx/effects'
+import * as registerEffect from './auth/store/effects/register.effect'
+import {provideHttpClient} from '@angular/common/http'
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(),
     provideZoneChangeDetection({eventCoalescing: true}),  // Оптимизация событий
     provideRouter(routes), // Маршруты
     provideStore({}), // Подключаем Store reducers
-    provideState({ name: 'auth', reducer: authReducer }),
+    provideState({name: 'auth', reducer: authReducer}),
+    provideEffects(registerEffect), // Подключаем Effects
     provideStoreDevtools({
       maxAge: 25, //Сохраняет последние 25 состояний
       logOnly: !isDevMode(), // Ограничение расширения до режима только для ведения журнала
@@ -20,6 +26,7 @@ export const appConfig: ApplicationConfig = {
       traceLimit: 75, // Максимальное количество хранимых кадров трассировки стека (в случае, если для параметра трассировки указано значение true)
       connectInZone: true // Если задано значение true, соединение устанавливается в зоне Angular
     }),
+    provideAnimationsAsync()
   ]
 }
 
