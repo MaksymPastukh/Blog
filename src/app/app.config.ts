@@ -7,7 +7,8 @@ import {provideStoreDevtools} from '@ngrx/store-devtools'
 import {authReducer} from './auth/store/reducers'
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
 import {provideEffects} from '@ngrx/effects'
-import * as registerEffect from './auth/store/effects/register.effect'
+import {registerEffect, redirectAfterSubmit} from './auth/store/effects/register.effect'
+
 import {provideHttpClient} from '@angular/common/http'
 
 export const appConfig: ApplicationConfig = {
@@ -17,7 +18,10 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), // Маршруты
     provideStore({}), // Подключаем Store reducers
     provideState({name: 'auth', reducer: authReducer}),
-    provideEffects(registerEffect), // Подключаем Effects
+    provideEffects({
+      registerEffect,
+      redirectAfterSubmit
+    }), // Подключаем Effects
     provideStoreDevtools({
       maxAge: 25, //Сохраняет последние 25 состояний
       logOnly: !isDevMode(), // Ограничение расширения до режима только для ведения журнала

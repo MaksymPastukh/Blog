@@ -6,5 +6,13 @@ export const authFeatureSelector = (state: AppStateInterface): AuthStateInterfac
 
 export const isSubmittingSelector = createSelector(
   authFeatureSelector,
-  (authState: AuthStateInterface) => authState.isSubmitting
+  (authState: AuthStateInterface):boolean => authState.isSubmitting
 )
+
+export const validationErrorsSelector = createSelector(
+  authFeatureSelector,
+  (authState: AuthStateInterface) => authState.validationErrors
+)
+
+
+// Селекторы нам позволяют извлечь поля из нашего store

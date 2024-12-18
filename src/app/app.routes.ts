@@ -1,8 +1,15 @@
 import {Routes} from '@angular/router'
+import {LayoutComponent} from './shared/layout/layout.component'
 
 export const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./auth/auth.routes'),
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./auth/auth.routes'),
+      }
+]
   },
 ]
