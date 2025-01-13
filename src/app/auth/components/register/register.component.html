@@ -5,8 +5,8 @@
         <p class="text-1xl text-gray-500 text-center mb-6">
           Already have an account? <a [routerLink]="['/login']" class="font-bold">Sign in</a>
         </p>
-        @if (backendErrors$ | async) {
-          <app-backend-error-messages [backendErrors]="backendErrors$ | async"></app-backend-error-messages>
+        @if (backendErrors$) {
+          <app-backend-error-messages  [backendErrors]="backendErrors$" (dataFromChild)="subscribeToBackendError($event)"></app-backend-error-messages>
         }
 
         <form [formGroup]="formRegister" (ngSubmit)="onSubmit()">

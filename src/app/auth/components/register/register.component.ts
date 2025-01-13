@@ -1,10 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core'
+import {Component, OnInit, Signal} from '@angular/core'
 import {CommonModule} from '@angular/common'
 import {RouterLink} from '@angular/router'
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
 import {select, Store} from '@ngrx/store'
 import {registerAction} from '../../store/actions/register.action'
-import {Observable, Subscription} from 'rxjs'
+import {Observable} from 'rxjs'
 import {isSubmittingSelector, validationErrorsSelector} from '../../store/selector'
 import {ButtonModule} from 'primeng/button'
 import {InputTextModule} from 'primeng/inputtext'
@@ -17,6 +17,7 @@ import {
   BackendErrorMessagesComponent
 } from '../../../shared/components/backend-error-messages/backend-error-messages.component'
 import {PersistanceService} from '../../../shared/services/persistance.service'
+import {toSignal} from '@angular/core/rxjs-interop'
 
 
 @Component({
@@ -33,12 +34,10 @@ import {PersistanceService} from '../../../shared/services/persistance.service'
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnInit, OnDestroy {
+export class RegisterComponent implements OnInit{
   public formRegister: FormGroup
   isSubmitting$: Observable<boolean>
-  backendErrors$ : Observable<BackendErrorsInterface | null>
-  private subscriptionErrors: Subscription | null = null
-  errorMessages: BackendErrorsInterface | string[]
+  backendErrors$ : Signal<BackendErrorsInterface | null>
 
   get name(): any {
     return this.formRegister.get('username')
@@ -53,24 +52,33 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   constructor(private fb: FormBuilder, private store: Store<AppStateInterface>) {
-
+    this.backendErrors$ = toSignal(this.store.pipe(select(validationErrorsSelector)), { initialValue: null });
   }
 
   ngOnInit(): void {
     this.initializeForm()
     this.initializeValues()
-    this.subscribeToBackendErrors();
   }
 
   initializeValues(): void {
-    this.isSubmitting$ = this.store.pipe(
-      select(isSubmittingSelector) // Выбираем данные по нашему селектору из хранилища и устанавливаем в этот Observable
-    )
-    this.backendErrors$ = this.store.pipe(
-      select(validationErrorsSelector) // Выбираем данные по нашему селектору из хранилища и устанавливаем в этот Observable
-    )
+    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector)) // Выбираем данные по нашему селектору из хранилища и устанавливаем в этот Observable
   }
 
+  subscribeToBackendError(dataErrors: BackendErrorsInterface) : void {
+    if(dataErrors) {
+      Object.keys(this.formRegister.controls).forEach((key) => {
+        this.formRegister.get(key)?.setErrors(null);
+      });
+
+      Object.keys(dataErrors).forEach((controlName: string) => {
+        const control = this.formRegister.get(controlName);
+        if (control) {
+          control.setErrors({ backend: dataErrors[controlName].join(', ') });
+        }
+      });
+    }
+
+  }
 
   initializeForm(): void {
     this.formRegister = this.fb.group({
@@ -84,25 +92,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const request: RegisterRequestInterface = {
       user: this.formRegister.value
     }
-
     this.store.dispatch(registerAction({request})) //Говорим стору что у нас произошло какое-то действие и передаем обьект данных
     this.formRegister.reset()
-  }
-
-  subscribeToBackendErrors() {
-   this.subscriptionErrors = this.backendErrors$?.subscribe(errors => {
-      if (errors) {
-        Object.keys(errors).forEach((controlName:string) => {
-          const control = this.formRegister.get(controlName)
-          if(control) {
-            control.setErrors({backend: errors[controlName].join(', ')})
-          }
-        })
-      }
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptionErrors?.unsubscribe()
   }
 }
