@@ -2,7 +2,7 @@ import {ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular
 import {provideRouter} from '@angular/router'
 
 import {routes} from './app.routes'
-import {provideState, provideStore} from '@ngrx/store'
+import {provideStore} from '@ngrx/store'
 import {provideStoreDevtools} from '@ngrx/store-devtools'
 import {authReducer} from './auth/store/reducers'
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
@@ -16,14 +16,15 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideZoneChangeDetection({eventCoalescing: true}),  // Оптимизация событий
     provideRouter(routes), // Маршруты
-    provideStore({}), // Подключаем Store reducers
-    provideState({name: 'auth', reducer: authReducer}),
+    provideStore({ // Подключаем Store reducers
+      auth: authReducer
+    }),
     provideEffects({
       registerEffect,
       redirectAfterSubmit
     }), // Подключаем Effects
     provideStoreDevtools({
-      maxAge: 25, //Сохраняет последние 25 состояний
+      maxAge: 25, // Количество Action которое мы хотим показывать в нашем DevTools
       logOnly: !isDevMode(), // Ограничение расширения до режима только для ведения журнала
       autoPause: true, // Приостанавливает запись действий и изменения состояния, когда окно расширения не открыто
       trace: false, //  Если установлено значение true, трассировка стека будет включена для каждого отправленного действия, так что вы можете увидеть его на вкладке трассировки, перейдя непосредственно к этой части кода

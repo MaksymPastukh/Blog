@@ -4,6 +4,10 @@ import {RegisterRequestInterface} from '../../types/registerRequest.interface'
 import {CurrentUserInterface} from '../../../shared/types/currentUser.interface'
 import {BackendErrorsInterface} from '../../../shared/types/backendErrors.interface'
 
+/**
+ * Компонент регистрации вызывает Action (Например: форма была отправлена)
+ */
+
 export const registerAction = createAction(
   ActionTypes.REGISTER,
   props<{request: RegisterRequestInterface}>()
@@ -17,6 +21,6 @@ export const registerSuccessAction = createAction(
 export const registerFailureAction = createAction(
   ActionTypes.REGISTER_FAILURE,
   props<{errors: BackendErrorsInterface}>()
-  )
+)
 
 

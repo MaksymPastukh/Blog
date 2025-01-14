@@ -11,5 +11,9 @@
     @apply w-[450px] h-[50px] border rounded-lg focus:outline-none focus:ring-0 border-gray-300 p-2;
   }
 
+  .auth-header {
+    @apply font-semibold font-montserrat text-blue-400 text-center text-5xl mb-16
+  }
+
 }
 

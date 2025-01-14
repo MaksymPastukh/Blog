@@ -8,6 +8,11 @@ import {HttpErrorResponse} from '@angular/common/http'
 import {PersistanceService} from '../../../shared/services/persistance.service'
 import {Router} from '@angular/router'
 
+/**
+ * С помощью Effect мы работаем с API
+ * Effect слушают наши Action и потом вызывают Service и таким образом мы обращаемся к API
+ */
+
 export const registerEffect = createEffect(
   (actions$ = inject(Actions),
    authService = inject(AuthService),

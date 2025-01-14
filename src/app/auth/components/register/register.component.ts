@@ -8,7 +8,9 @@ import {Observable} from 'rxjs'
 import {isSubmittingSelector, validationErrorsSelector} from '../../store/selector'
 import {ButtonModule} from 'primeng/button'
 import {InputTextModule} from 'primeng/inputtext'
+import {toSignal} from '@angular/core/rxjs-interop'
 import {FloatLabelModule} from 'primeng/floatlabel'
+
 import {AuthService} from '../../services/auth.service'
 import {RegisterRequestInterface} from '../../types/registerRequest.interface'
 import {AppStateInterface} from '../../../shared/types/appState.interface'
@@ -17,7 +19,6 @@ import {
   BackendErrorMessagesComponent
 } from '../../../shared/components/backend-error-messages/backend-error-messages.component'
 import {PersistanceService} from '../../../shared/services/persistance.service'
-import {toSignal} from '@angular/core/rxjs-interop'
 
 
 @Component({
@@ -28,7 +29,8 @@ import {toSignal} from '@angular/core/rxjs-interop'
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    FloatLabelModule, BackendErrorMessagesComponent
+    FloatLabelModule,
+    BackendErrorMessagesComponent
   ],
   providers: [AuthService, PersistanceService],
   templateUrl: './register.component.html',
@@ -56,6 +58,7 @@ export class RegisterComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    // Лучше всего в ngOnInit делать вызовы методов, не более.
     this.initializeForm()
     this.initializeValues()
   }
@@ -64,6 +67,7 @@ export class RegisterComponent implements OnInit{
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector)) // Выбираем данные по нашему селектору из хранилища и устанавливаем в этот Observable
   }
 
+  //Обработка ошибок с сервера
   subscribeToBackendError(dataErrors: BackendErrorsInterface) : void {
     if(dataErrors) {
       Object.keys(this.formRegister.controls).forEach((key) => {
@@ -80,6 +84,7 @@ export class RegisterComponent implements OnInit{
 
   }
 
+  //Форма регистрации
   initializeForm(): void {
     this.formRegister = this.fb.group({
       username: ['', Validators.required],
@@ -88,6 +93,7 @@ export class RegisterComponent implements OnInit{
     })
   }
 
+  //Кнопка регистрации
   onSubmit(): void {
     const request: RegisterRequestInterface = {
       user: this.formRegister.value
