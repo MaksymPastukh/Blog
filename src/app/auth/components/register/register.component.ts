@@ -8,17 +8,14 @@ import {Observable} from 'rxjs'
 import {isSubmittingSelector, validationErrorsSelector} from '../../store/selector'
 import {ButtonModule} from 'primeng/button'
 import {InputTextModule} from 'primeng/inputtext'
-import {toSignal} from '@angular/core/rxjs-interop'
 import {FloatLabelModule} from 'primeng/floatlabel'
 
-import {AuthService} from '../../services/auth.service'
 import {RegisterRequestInterface} from '../../types/registerRequest.interface'
 import {AppStateInterface} from '../../../shared/types/appState.interface'
 import {BackendErrorsInterface} from '../../../shared/types/backendErrors.interface'
 import {
   BackendErrorMessagesComponent
 } from '../../../shared/components/backend-error-messages/backend-error-messages.component'
-import {PersistanceService} from '../../../shared/services/persistance.service'
 
 
 @Component({
@@ -32,14 +29,13 @@ import {PersistanceService} from '../../../shared/services/persistance.service'
     FloatLabelModule,
     BackendErrorMessagesComponent
   ],
-  providers: [AuthService, PersistanceService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent implements OnInit{
   public formRegister: FormGroup
   isSubmitting$: Observable<boolean>
-  backendErrors$ : Signal<BackendErrorsInterface | null>
+  backendErrors$ : Observable<BackendErrorsInterface | null>
 
   get name(): any {
     return this.formRegister.get('username')
@@ -54,7 +50,6 @@ export class RegisterComponent implements OnInit{
   }
 
   constructor(private fb: FormBuilder, private store: Store<AppStateInterface>) {
-    this.backendErrors$ = toSignal(this.store.pipe(select(validationErrorsSelector)), { initialValue: null });
   }
 
   ngOnInit(): void {
@@ -65,6 +60,7 @@ export class RegisterComponent implements OnInit{
 
   initializeValues(): void {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector)) // Выбираем данные по нашему селектору из хранилища и устанавливаем в этот Observable
+    this.backendErrors$ = this.store.pipe(select(validationErrorsSelector))
   }
 
   //Обработка ошибок с сервера
@@ -78,10 +74,10 @@ export class RegisterComponent implements OnInit{
         const control = this.formRegister.get(controlName);
         if (control) {
           control.setErrors({ backend: dataErrors[controlName].join(', ') });
+          this.formRegister.reset()
         }
       });
     }
-
   }
 
   //Форма регистрации
