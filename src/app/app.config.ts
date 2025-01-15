@@ -2,7 +2,7 @@ import {ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular
 import {provideRouter} from '@angular/router'
 
 import {routes} from './app.routes'
-import {provideStore} from '@ngrx/store'
+import {provideState, provideStore} from '@ngrx/store'
 import {provideStoreDevtools} from '@ngrx/store-devtools'
 import {authReducer} from './auth/store/reducers'
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
@@ -16,9 +16,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideZoneChangeDetection({eventCoalescing: true}),  // Оптимизация событий
     provideRouter(routes), // Маршруты
-    provideStore({ // Подключаем Store reducers
-      auth: authReducer
-    }),
+    provideStore(),
+    provideState({ name: 'auth', reducer: authReducer }), // Подключаем Store reducers
     provideEffects({
       registerEffect,
       redirectAfterSubmit

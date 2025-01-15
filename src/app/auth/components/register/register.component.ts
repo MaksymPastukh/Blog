@@ -1,4 +1,4 @@
-import {Component, OnInit, Signal} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {CommonModule} from '@angular/common'
 import {RouterLink} from '@angular/router'
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
@@ -61,23 +61,6 @@ export class RegisterComponent implements OnInit{
   initializeValues(): void {
     this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector)) // Выбираем данные по нашему селектору из хранилища и устанавливаем в этот Observable
     this.backendErrors$ = this.store.pipe(select(validationErrorsSelector))
-  }
-
-  //Обработка ошибок с сервера
-  subscribeToBackendError(dataErrors: BackendErrorsInterface) : void {
-    if(dataErrors) {
-      Object.keys(this.formRegister.controls).forEach((key) => {
-        this.formRegister.get(key)?.setErrors(null);
-      });
-
-      Object.keys(dataErrors).forEach((controlName: string) => {
-        const control = this.formRegister.get(controlName);
-        if (control) {
-          control.setErrors({ backend: dataErrors[controlName].join(', ') });
-          this.formRegister.reset()
-        }
-      });
-    }
   }
 
   //Форма регистрации

@@ -22,7 +22,7 @@ export const registerEffect = createEffect(
       switchMap(({request}) => {
         return authService.register(request).pipe(
           map((currentUser: CurrentUserInterface) => {
-            persistenceService.set('accessToken', currentUser.token)
+            persistenceService.setItem('accessToken', currentUser.token)
             return registerSuccessAction({currentUser})
           }),
           catchError((errorResponse: HttpErrorResponse) => {
