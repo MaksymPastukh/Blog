@@ -3,7 +3,7 @@
       <div class="bg-white p-8 rounded-lg shadow-lg">
         <h1 class="auth-header">Join Blog</h1>
         <p class="text-1xl text-gray-500 text-center mb-6">
-          Already have an account? <a [routerLink]="['/login']" class="font-bold">Sign in</a>
+          Already have an account? <a [routerLink]="['/login']" class="font-bold font-montserrat">Sign in</a>
         </p>
         @if (backendErrors$ | async) {
           <mc-backend-error-messages  [backendErrors]="backendErrors$ | async"></mc-backend-error-messages>
