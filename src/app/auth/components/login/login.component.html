@@ -2,19 +2,25 @@
   <div class="h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-lg">
       <h1 class="auth-header">Sing In</h1>
-      <div class="text-center  mb-6"><a [routerLink]="['/register']" class="font-bold font-montserrat text-1xl text-gray-500">Need an account?</a></div>
+      <div class="text-center  mb-6"><a [routerLink]="['/register']"
+                                        class="font-bold font-montserrat text-1xl text-gray-500">Need an account?</a>
+      </div>
 
-      <form>
+      <form [formGroup]="formSingIn" (ngSubmit)="onSingIn()">
         <fieldset class="mb-3">
-          <input id="email" type="text"
+          <input id="email" type="text" formControlName="email"
+                 [ngStyle]="{'border-color': email?.invalid &&
+                 (email?.dirty || email?.touched) ? 'red' : ''}"
                  placeholder="Email" class="auth-input">
         </fieldset>
         <fieldset class="mb-3">
-          <input id="password" type="password"
+          <input id="password" type="password" formControlName="password"
                  placeholder="Password" class="auth-input">
         </fieldset>
         <fieldset class="flex justify-end">
-          <p-button type="submit" class="auth-btn" label="Sing In"/>
+          <p-button type="submit" class="auth-btn"
+                    [disabled]="formSingIn.invalid"
+                    label="Sing In" />
         </fieldset>
       </form>
     </div>
