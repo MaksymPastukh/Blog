@@ -30,7 +30,7 @@ export const loginEffect = createEffect(
   {functional: true}
 )
 
-export const redirectAfterSubmit = createEffect(
+export const redirectLoginAfterSubmit = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => actions$.pipe(
     ofType(loginSuccessAction),
     tap(() => {

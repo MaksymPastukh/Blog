@@ -7,9 +7,10 @@ import {provideStoreDevtools} from '@ngrx/store-devtools'
 import {authReducer} from './auth/store/reducers'
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
 import {provideEffects} from '@ngrx/effects'
-import {registerEffect, redirectAfterSubmit} from './auth/store/effects/register.effect'
+import {registerEffect, redirectRegisterAfterSubmit} from './auth/store/effects/register.effect'
 
 import {provideHttpClient} from '@angular/common/http'
+import {loginEffect, redirectLoginAfterSubmit} from './auth/store/effects/login.effect'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,10 +18,15 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({eventCoalescing: true}),  // Оптимизация событий
     provideRouter(routes), // Маршруты
     provideStore(),
-    provideState({ name: 'auth', reducer: authReducer }), // Подключаем Store reducers
+    provideState(
+      { name: 'auth', reducer: authReducer },
+
+    ), // Подключаем Store reducers
     provideEffects({
       registerEffect,
-      redirectAfterSubmit
+      redirectRegisterAfterSubmit,
+      loginEffect,
+      redirectLoginAfterSubmit,
     }), // Подключаем Effects
     provideStoreDevtools({
       maxAge: 25, // Количество Action которое мы хотим показывать в нашем DevTools

@@ -35,7 +35,7 @@ export const registerEffect = createEffect(
   {functional: true}
 )
 
-export const redirectAfterSubmit = createEffect(
+export const redirectRegisterAfterSubmit = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => actions$.pipe(
     ofType(registerSuccessAction),
     tap(() => {
