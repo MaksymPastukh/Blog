@@ -15,7 +15,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   public formSingIn: FormGroup
 
   constructor(private fb: FormBuilder) {
@@ -24,7 +24,11 @@ export class LoginComponent implements OnInit{
 
   get email(): any {
     return this.formSingIn.get('email')
-}
+  }
+
+  get password(): any {
+    return this.formSingIn.get('password')
+  }
 
 
   ngOnInit() {
@@ -32,14 +36,14 @@ export class LoginComponent implements OnInit{
   }
 
 
-  initializeForm() : void {
+  initializeForm(): void {
     this.formSingIn = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
-      password: ['']
+      password: ['', Validators.required]
     })
   }
 
-  onSingIn() : void {
+  onSingIn(): void {
 
   }
 }
