@@ -3,6 +3,10 @@ import {RouterLink} from '@angular/router'
 import {CommonModule} from '@angular/common'
 import {Button} from 'primeng/button'
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
+import {LoginRequestInterface} from '../../types/loginRequest.interface'
+import {AppStateInterface} from '../../../shared/types/appState.interface'
+import {Store} from '@ngrx/store'
+import {loginAction} from '../../store/actions/login.action'
 
 @Component({
   selector: 'c-login',
@@ -18,7 +22,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 export class LoginComponent implements OnInit {
   public formSingIn: FormGroup
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private store: Store<AppStateInterface>) {
   }
 
 
@@ -44,6 +48,11 @@ export class LoginComponent implements OnInit {
   }
 
   onSingIn(): void {
+    const request: LoginRequestInterface = {
+      user: this.formSingIn.value
+    }
 
+    this.store.dispatch(loginAction({request}))
+    this.formSingIn.reset()
   }
 }
