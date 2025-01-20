@@ -5,8 +5,14 @@ import {Button} from 'primeng/button'
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
 import {LoginRequestInterface} from '../../types/loginRequest.interface'
 import {AppStateInterface} from '../../../shared/types/appState.interface'
-import {Store} from '@ngrx/store'
+import {select, Store} from '@ngrx/store'
 import {loginAction} from '../../store/actions/login.action'
+import {Observable} from 'rxjs'
+import {BackendErrorsInterface} from '../../../shared/types/backendErrors.interface'
+import {isSubmittingSelector, validationErrorsSelector} from '../../store/selector'
+import {
+  BackendErrorMessagesComponent
+} from '../../../shared/components/backend-error-messages/backend-error-messages.component'
 
 @Component({
   selector: 'c-login',
@@ -14,13 +20,16 @@ import {loginAction} from '../../store/actions/login.action'
     CommonModule,
     RouterLink,
     Button,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BackendErrorMessagesComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent implements OnInit {
   public formSingIn: FormGroup
+  public isSubmitting$: Observable<boolean>
+  public backendErrors$: Observable<BackendErrorsInterface | null>
 
   constructor(private fb: FormBuilder, private store: Store<AppStateInterface>) {
   }
@@ -37,6 +46,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm()
+    this.initializeValue()
   }
 
 
@@ -45,6 +55,11 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.email, Validators.required]],
       password: ['', Validators.required]
     })
+  }
+
+  initializeValue() {
+    this.isSubmitting$ = this.store.pipe(select(isSubmittingSelector))
+    this.backendErrors$ = this.store.pipe(select(validationErrorsSelector))
   }
 
   onSingIn(): void {
