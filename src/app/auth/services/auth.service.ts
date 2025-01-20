@@ -33,7 +33,4 @@ export class AuthService {
       .post<AuthResponseInterface>(url, data)
       .pipe(map(this.getUser))
   }
-
 }
-
-// Qwerty123q1
