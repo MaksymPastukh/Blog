@@ -1,5 +1,9 @@
-import {Component} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {RouterOutlet} from '@angular/router'
+import {Store} from '@ngrx/store'
+import {AuthStateInterface} from './auth/types/authState.interface'
+import {AppStateInterface} from './shared/types/appState.interface'
+import {getCurrentUserAction} from './auth/store/actions/getCurrentUser.action'
 
 @Component({
   selector: 'app-root',
@@ -9,7 +13,12 @@ import {RouterOutlet} from '@angular/router'
   ],
   templateUrl: './app.component.html'
 })
-export class AppComponent {
-  value: string
+export class AppComponent implements OnInit{
 
+  constructor(private store: Store<AppStateInterface>) {
+  }
+
+  ngOnInit():void {
+    this.store.dispatch(getCurrentUserAction())
+  }
 }
