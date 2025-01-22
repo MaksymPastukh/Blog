@@ -38,10 +38,32 @@
 
       <div class="">
         <nav class="menu">
-          <ul>
+          <ul class="flex">
             <li>
               <a [routerLink]="['/']">Home</a>
             </li>
+            <ng-container *ngIf="isLoggedIn$ | async">
+              <li>
+                <a [routerLink]="['/articles/new']">New Post</a>
+              </li>
+              <li>
+                <a [routerLink]="['/settings']">Setting</a>
+              </li>
+              <li>
+                <a [routerLink]="['/profiles', (currentUser$ | async).username]">
+                  <img class="user-img" [src]="(currentUser$ | async).image" alt="icon-user" />
+                  &nbsp; {{ (currentUser$ |async).username }}
+                </a>
+              </li>
+            </ng-container>
+            <ng-container *ngIf="isAnonymous$ | async">
+              <li>
+                <a [routerLink]="['/login']">Sing In</a>
+              </li>
+              <li>
+                <a [routerLink]="['/register']">Sing Up</a>
+              </li>
+            </ng-container>
           </ul>
         </nav>
       </div>
