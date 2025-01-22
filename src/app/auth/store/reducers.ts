@@ -2,7 +2,11 @@ import {AuthStateInterface} from '../types/authState.interface'
 import {createReducer, on} from '@ngrx/store'
 import {registerAction, registerFailureAction, registerSuccessAction} from './actions/register.action'
 import {loginAction, loginFailureActions, loginSuccessAction} from './actions/login.action'
-import {getCurrentUserAction, getCurrentUserSuccessAction} from './actions/getCurrentUser.action'
+import {
+  getCurrentUserAction,
+  getCurrentUserFailureAction,
+  getCurrentUserSuccessAction
+} from './actions/getCurrentUser.action'
 
 /**
  * Это специальные функции которые следят за Action и меняют глобальное состояние
@@ -76,7 +80,7 @@ export const authReducer = createReducer(
       currentUser: action.currentUser
     })),
 
-  on(getCurrentUserSuccessAction,
+  on(getCurrentUserFailureAction,
     (state): AuthStateInterface => ({
       ...state,
       isLoading: false,

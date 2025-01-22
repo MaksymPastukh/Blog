@@ -11,6 +11,7 @@ import {registerEffect, redirectRegisterAfterSubmit} from './auth/store/effects/
 
 import {provideHttpClient} from '@angular/common/http'
 import {loginEffect, redirectLoginAfterSubmit} from './auth/store/effects/login.effect'
+import {getCurrentUserEffect} from './auth/store/effects/getCurrentUser.effect'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +28,7 @@ export const appConfig: ApplicationConfig = {
       redirectRegisterAfterSubmit,
       loginEffect,
       redirectLoginAfterSubmit,
+      getCurrentUserEffect,
     }), // Подключаем Effects
     provideStoreDevtools({
       maxAge: 25, // Количество Action которое мы хотим показывать в нашем DevTools
