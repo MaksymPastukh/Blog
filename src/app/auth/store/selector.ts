@@ -25,6 +25,12 @@ export const validationErrorsSelector = createSelector(
 )
 
 
+export const isLoggedInSelector = createSelector(
+  authFeatureSelector,
+  (authState: AuthStateInterface): boolean => authState.isLoggedIn
+)
+
+
 export const isLoggedOnOffSelector = createSelector(
   authFeatureSelector,
   (authState: AuthStateInterface): boolean => authState.isLoggedIn === false
