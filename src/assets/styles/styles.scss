@@ -4,7 +4,7 @@
 
 @layer utilities {
   .auth-btn {
-    @apply w-[110px] h-[40px] py-2 px-6 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer;
+    @apply w-[110px] h-[40px] py-2 px-6 bg-black text-white font-bold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer;
   }
 
   .auth-input {
@@ -12,7 +12,11 @@
   }
 
   .auth-header {
-    @apply font-semibold font-montserrat text-blue-400 text-center text-5xl mb-10
+    @apply font-semibold font-montserrat text-gray-500 text-center text-5xl mb-10
+  }
+
+  .menu li {
+    @apply font-montserrat text-black ml-1
   }
 
 }

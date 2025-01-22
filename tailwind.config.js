@@ -12,6 +12,8 @@ module.exports = {
       },
       fontFamily: {
         montserrat: ['Montserrat', 'sans-serif'],
+        lora: ['Lora', 'sans-serif'],
+        muller: ['Muller', 'sans-serif'],
         custom: ['"Open Sans"', 'sans-serif'] // пример кастомного шрифта
       },
       // Пример добавления кастомных размеров
@@ -23,6 +25,9 @@ module.exports = {
       borderRadius: {
         lg: '.2rem' // Свой размер скругления
       },
+      // container: {
+      //   padding: '2rem',
+      // },
     }
   },
   plugins: []
