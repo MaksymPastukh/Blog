@@ -12,23 +12,25 @@ import {registerEffect, redirectRegisterAfterSubmit} from './auth/store/effects/
 import {provideHttpClient} from '@angular/common/http'
 import {loginEffect, redirectLoginAfterSubmit} from './auth/store/effects/login.effect'
 import {getCurrentUserEffect} from './auth/store/effects/getCurrentUser.effect'
+import {ConfigService} from './shared/services/config.service'
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(),
+    provideHttpClient(), {
+      provide: ConfigService,
+    },
     provideZoneChangeDetection({eventCoalescing: true}),  // Оптимизация событий
     provideRouter(routes), // Маршруты
     provideStore(),
     provideState(
-      { name: 'auth', reducer: authReducer },
-
+      {name: 'auth', reducer: authReducer}
     ), // Подключаем Store reducers
     provideEffects({
       registerEffect,
       redirectRegisterAfterSubmit,
       loginEffect,
       redirectLoginAfterSubmit,
-      getCurrentUserEffect,
+      getCurrentUserEffect
     }), // Подключаем Effects
     provideStoreDevtools({
       maxAge: 25, // Количество Action которое мы хотим показывать в нашем DevTools
