@@ -16,7 +16,6 @@ import {AsyncPipe, NgIf} from '@angular/common'
   imports: [
     RouterLink,
     AsyncPipe,
-    NgIf
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
