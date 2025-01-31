@@ -12,7 +12,6 @@ import {registerEffect, redirectRegisterAfterSubmit} from './auth/store/effects/
 import {provideHttpClient, withInterceptors} from '@angular/common/http'
 import {loginEffect, redirectLoginAfterSubmit} from './auth/store/effects/login.effect'
 import {getCurrentUserEffect} from './auth/store/effects/getCurrentUser.effect'
-import {ConfigService} from './shared/services/config.service'
 import {AuthInterceptor} from './shared/services/authinterceptor.service'
 
 export const appConfig: ApplicationConfig = {
@@ -20,9 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([AuthInterceptor])
     ),
-    {
-      provide: ConfigService,
-    },
     provideZoneChangeDetection({eventCoalescing: true}),  // Оптимизация событий
     provideRouter(routes), // Маршруты
     provideStore(),
