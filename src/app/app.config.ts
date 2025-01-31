@@ -13,6 +13,8 @@ import {provideHttpClient, withInterceptors} from '@angular/common/http'
 import {loginEffect, redirectLoginAfterSubmit} from './auth/store/effects/login.effect'
 import {getCurrentUserEffect} from './auth/store/effects/getCurrentUser.effect'
 import {AuthInterceptor} from './shared/services/authinterceptor.service'
+import {providePrimeNG} from 'primeng/config'
+import Aura from '@primeng/themes/aura';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -41,6 +43,14 @@ export const appConfig: ApplicationConfig = {
       connectInZone: true // Если задано значение true, соединение устанавливается в зоне Angular
     }),
     provideAnimationsAsync(),
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: '.my-app-dark'
+        }
+      }
+    })
   ]
 }
 
