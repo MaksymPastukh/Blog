@@ -1,0 +1,30 @@
+<p-button label="Toggle Dark Mode" (onClick)="toggleDarkMode()"/>
+<div class="border-b">
+  <h2>Счётчик с чётностью</h2>
+  <p>Cчётчик, который отображает текущее значение и указывает, чётное оно или нет.</p>
+  <div>
+    <button class="m-4" (click)="decrement()">-</button>
+    <span>{{ count() }}</span>
+    <button class="ml-4" (click)="increment()">+</button>
+    <p>Число {{ isEven() ? 'чётное' : 'нечётное' }}</p>
+  </div>
+</div>
+<div class="border-b ">
+  <h2> Реактивная форма с авто сохранением</h2>
+  <p>Текстовое поле, которое автоматически сохраняет введённый текст в localStorage</p>
+  <div class="m-3">
+    <input type="text" pInputText
+           [value]="text()"
+           (input)="text.set($any($event.target).value)">
+  </div>
+</div>
+<div class="border-b">
+  <h2>Корзина покупок</h2>
+  <p>Компонент корзины с товарами и общей суммой.</p>
+  <div *ngFor="let product of products()">
+    {{ product.name }} - ${{ product.price }}
+    <button (click)="removeProduct(product.id)">×</button>
+  </div>
+  <p>Итого: ${{ total() }}</p>
+  <button (click)="addProduct()">Добавить товар</button>
+</div>

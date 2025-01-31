@@ -40,7 +40,7 @@ export const appConfig: ApplicationConfig = {
       traceLimit: 75, // Максимальное количество хранимых кадров трассировки стека (в случае, если для параметра трассировки указано значение true)
       connectInZone: true // Если задано значение true, соединение устанавливается в зоне Angular
     }),
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
   ]
 }
 

@@ -21,6 +21,5 @@ export class AppComponent implements OnInit{
 
   ngOnInit():void {
     this.store.dispatch(getCurrentUserAction())
-    this.http.get('https://api.example.com/data').subscribe();
   }
 }
