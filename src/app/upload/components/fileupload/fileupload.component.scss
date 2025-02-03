@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  gap: 20px;
+
+  .tooltip {
+    position: absolute;
+    padding: 8px;
+    background: white;
+    border: 1px solid #ccc;
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+

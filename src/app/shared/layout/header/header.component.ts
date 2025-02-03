@@ -10,12 +10,15 @@ import {
   isLoggedInSelector
 } from '../../../auth/store/selector'
 import {AsyncPipe, NgIf} from '@angular/common'
+import {Button} from 'primeng/button'
 
 @Component({
   selector: 'app-header',
   imports: [
     RouterLink,
     AsyncPipe,
+    NgIf,
+    Button
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -33,5 +36,10 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn$ = this.store.pipe(select(isLoggedInSelector))
     this.isAnonymous$ = this.store.pipe(select(isAnonymousSelector))
     this.currentUser$ = this.store.pipe(select(currentUserSelector))
+  }
+
+  toggleDarkMode() {
+    const element = document.querySelector('html');
+    element.classList.toggle('my-app-dark');
   }
 }

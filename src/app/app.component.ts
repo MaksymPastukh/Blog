@@ -16,7 +16,7 @@ import {HttpClient} from '@angular/common/http'
 })
 export class AppComponent implements OnInit{
 
-  constructor(private store: Store<AppStateInterface>, private http: HttpClient) {
+  constructor(private store: Store<AppStateInterface>) {
   }
 
   ngOnInit():void {

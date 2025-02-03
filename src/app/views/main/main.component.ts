@@ -15,7 +15,6 @@ interface Product {
   imports: [
     InputTextModule,
     NgForOf,
-    Button
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
@@ -41,10 +40,7 @@ export class MainComponent {
     })
   }
 
-  toggleDarkMode() {
-    const element = document.querySelector('html');
-    element.classList.toggle('my-app-dark');
-  }
+
 
   toggleTheme(): void {
     this.isDarkTheme.update(v => !v)

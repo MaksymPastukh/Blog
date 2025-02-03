@@ -40,6 +40,3 @@ export const currentUserSelector = createSelector(
   authFeatureSelector,
   (authState: AuthStateInterface): CurrentUserInterface => authState.currentUser
 )
-
-
-

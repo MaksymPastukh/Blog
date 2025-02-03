@@ -2,7 +2,7 @@ import {ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular
 import {provideRouter} from '@angular/router'
 
 import {routes} from './app.routes'
-import {provideState, provideStore} from '@ngrx/store'
+import {provideStore} from '@ngrx/store'
 import {provideStoreDevtools} from '@ngrx/store-devtools'
 import {authReducer} from './auth/store/reducers'
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async'
@@ -15,6 +15,7 @@ import {getCurrentUserEffect} from './auth/store/effects/getCurrentUser.effect'
 import {AuthInterceptor} from './shared/services/authinterceptor.service'
 import {providePrimeNG} from 'primeng/config'
 import Aura from '@primeng/themes/aura';
+import {chartReducer} from './upload/store/data.reducers'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,10 +24,10 @@ export const appConfig: ApplicationConfig = {
     ),
     provideZoneChangeDetection({eventCoalescing: true}),  // Оптимизация событий
     provideRouter(routes), // Маршруты
-    provideStore(),
-    provideState(
-      {name: 'auth', reducer: authReducer}
-    ), // Подключаем Store reducers
+    provideStore({
+      auth: authReducer,
+      chart: chartReducer
+    }),
     provideEffects({
       registerEffect,
       redirectRegisterAfterSubmit,

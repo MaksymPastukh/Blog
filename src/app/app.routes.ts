@@ -11,6 +11,14 @@ export const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./auth/auth.routes')
+      },
+      {
+        path: '',
+        loadChildren: () => import('./upload/upload.routes')
+      },
+      {
+        path: '',
+        loadChildren: () => import('./theory/theory.routes')
       }
     ]
   }

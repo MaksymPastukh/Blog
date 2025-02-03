@@ -1,0 +1,30 @@
+<p-toast/>
+<div class="h-screen" >
+  <p-fileUpload
+    name="dataFile"
+    accept=".json"
+    maxFileSize="5000000"
+    [multiple]="true"
+    [auto]="true"
+    [customUpload]="true"
+    (onSelect)="onUpload($event)"
+    (onError)="messageService.add({
+    severity: 'error',
+    summary: 'Error',
+    detail: $event.error.message
+  })"
+    chooseLabel="Select JSON File"
+    [showUploadButton]="false"
+    [showCancelButton]="false">
+    <ng-template #content >
+      <ul *ngIf="files" >
+        <li *ngFor="let file of files">{{ file.name }} -> {{file.size}} В -> {{file.timestamp}}</li>
+      </ul>
+    </ng-template>
+  </p-fileUpload>
+
+  <app-d3 (dataChart)="onChildNotify($event)"/>
+  <button (click)="clearData()">Clear All Data</button>
+</div>
+
+
