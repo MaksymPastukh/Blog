@@ -2,6 +2,7 @@ import {Component, computed, effect, input, signal} from '@angular/core'
 import {InputTextModule} from 'primeng/inputtext'
 import {NgForOf} from '@angular/common'
 import {Button} from 'primeng/button'
+import {Renderer2Directive} from '../../shared/directive/renderer2.directive'
 
 
 interface Product {
@@ -15,6 +16,7 @@ interface Product {
   imports: [
     InputTextModule,
     NgForOf,
+    Renderer2Directive
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
